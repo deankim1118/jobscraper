@@ -2,16 +2,17 @@ import requests
 from bs4 import BeautifulSoup
 
 class Scraper:
-    def __init__(self):
+    def __init__(self, keywords = []):
+        self.keywords = keywords
         self.job_lists = []
         
-    def get_response(self,url):
-        response = requests.get(f"https://remoteok.com/remote-{url}-jobs", headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"})
+    def get_response(self,keywords):
+        response = requests.get(f"https://remoteok.com/remote-{keywords}-jobs", headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"})
         soup = BeautifulSoup(response.content, "html.parser")
         return soup
         
-    def scraping_page(self, url):
-        soup = self.get_response(url)
+    def scraping_page(self, keywords):
+        soup = self.get_response(keywords)
         jobs = soup.find("table", id="jobsboard").find_all("td", class_="company_and_position")[1:]
 
         for job in jobs:
@@ -30,10 +31,10 @@ class Scraper:
             }
             self.job_lists.append(job_data)
             
-    def scraping_all(self, url = []):
-        for u in url:
+    def scraping_all(self):
+        for u in self.keywords:
             self.scraping_page(u)  
-        print(self.job_lists)
+        print(len(self.job_lists))
               
-scraping = Scraper()
-scraping.scraping_all(["flutter","ios","java"])
+scraping = Scraper(["flutter","ios","java"])
+scraping.scraping_all()
