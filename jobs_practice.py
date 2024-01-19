@@ -42,7 +42,7 @@ for job in jobs:
     }
     jobs_db.append(job)
 
-with open("jobs.csv", mode="w", encoding="utf-8") as file:
+with open("jobs.csv", mode="w", encoding="utf8") as file:
     writer = csv.writer(file)
     writer.writerow(["Title","Company","Location","Reward","Link",])
     
