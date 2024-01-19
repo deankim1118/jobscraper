@@ -35,6 +35,8 @@ class Scraper:
         for u in self.keywords:
             self.scraping_page(u)  
         print(len(self.job_lists))
+        
+keywords = ["flutter","ios","java"]
               
-scraping = Scraper(["flutter","ios","java"])
+scraping = Scraper(keywords)
 scraping.scraping_all()
