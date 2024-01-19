@@ -1,7 +1,9 @@
 import requests
 import re # 정규식
 
-res = requests.get("https://www.google.com")
+url = "https://www.google.com"
+user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+res = requests.get(url, headers=user_agent) # 유저에이전트를 쓰면서 스크랩 막아놓은 걸 우회할 수 있다.
 # 에러가 나면 Raise Error 프로그램을 종료한다. 에러가 안 나면 밑에 코드 실행! 보통 같이 쓰고 시작.
 res.raise_for_status()
 
@@ -28,5 +30,5 @@ def print_match(m):
     else:
         print("It doesn't match on our system")
         
-#print_match(search)
-print(list_matched)
+# print_match(search)
+# print(list_matched)
