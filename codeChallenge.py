@@ -1,10 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 class Scraper:
     def __init__(self, keywords = []):
         self.keywords = keywords
         self.job_lists = []
+        self.df = pd.DataFrame()
         
     def get_response(self,keywords):
         response = requests.get(f"https://remoteok.com/remote-{keywords}-jobs", headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"})
@@ -30,13 +32,19 @@ class Scraper:
                 "income": income.text
             }
             self.job_lists.append(job_data)
+        self.df = pd.DataFrame(self.job_lists)
             
     def scraping_all(self):
         for u in self.keywords:
             self.scraping_page(u)  
-        print(self.job_lists)
+        # print(self.df)
+        
+    def to_csv(self):
+        excel_file = self.df.to_csv('jobs.csv')
+        return excel_file
         
 keywords = ["flutter","ios","java"]
               
 scraping = Scraper(keywords)
 scraping.scraping_all()
+scraping.to_csv()
