@@ -8,6 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 ### Keeping browser open
 options = webdriver.ChromeOptions()
 options.add_experimental_option("detach", True)
+actual_list = []
 
 ### Variables 
 url = "https://rahulshettyacademy.com/seleniumPractise/#/"
@@ -27,6 +28,7 @@ results = driver.find_elements(By.XPATH, "//div[@class='products']/div") #List
 count = len(results)
 assert count > 0
 for result in results:
+    actual_list.append(result.find_element(By.XPATH, "h4").text)
     result.find_element(By.XPATH, "div/button").click()
     
 driver.find_element(By.CSS_SELECTOR, "img[alt='Cart']").click()
